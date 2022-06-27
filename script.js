@@ -1,4 +1,4 @@
-//code idea fromm
+//code idea from
 //https://www.youtube.com/watch?v=-3HwUKsovBE
 let seed = 1234;
 
@@ -14,8 +14,6 @@ function setup() {
   createCanvas(800, 800);
   angleMode(DEGREES)
   createButton("reroll").mousePressed(() => seed++);
-  //noLoop()
-
 } 
 
 function draw() { 
@@ -24,28 +22,30 @@ function draw() {
   background(100);
   
   noStroke();
-
+  //add sky
   fill(skyColor);
   rect(0, 0, width, 500);
-  
+  //add grass
   fill(grassColor);
   rect(0, 500, width, height / 2);
-
+  //add road
   fill(roadcolor);
   quad(350, 500, 450, 500, 700, 800, 100, 800);
-
+  //add middle lane
   fill(roadcolor2);
   quad(390, 505, 410, 505, 420, 580, 380, 580);
 
   fill(roadcolor2);
   quad(380, 610, 420, 610, 440, 780, 360, 780);
-  
+
+  //add sun
   fill(...sunColor);
   ellipse(mouseX,0,30,30);
   ellipse(mouseX,0,50,50);
   ellipse(mouseX,0,100,100);
   ellipse(mouseX,0,200,200);
 
+  //add sakura tree
   translate(100, 650)
   branch(100)
 
@@ -69,7 +69,7 @@ function draw() {
 function branch(len)
 {
   push()
-  if(len > 19)
+  if(len > 18)
     {
       strokeWeight(map(len, 4, 130, 1, 16))
       stroke(70,40,20)
