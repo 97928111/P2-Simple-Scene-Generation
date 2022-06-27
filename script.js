@@ -1,125 +1,99 @@
-/* exported setup, draw */
-let seed = 12345;
+//code idea fromm
+//https://www.youtube.com/watch?v=-3HwUKsovBE
+let seed = 1234;
 
-const grassColor = "#e1ac4a";
-const skyColor = "#cdd8e6";
-const hillColor = "#1e273f";
-const treeColor = "#3d1803";
-const leaveColor = "#233610";
-const sunColor = [254,254,254,80]; // with opacity
+const grassColor = "#498428";
+const skyColor = "#91C5F2";
+let roadcolor = '#292929';
+const sunColor = [254,254,254,80];
 
-function preload() {
-    // runs before setup 
-    // use if you want to load any large files and want to make sure they load before setup()
-}
 
-function setup() {
-  createCanvas(800, 400);
+function setup() { 
+  createCanvas(800, 800);
+  angleMode(DEGREES)
   createButton("reroll").mousePressed(() => seed++);
-}
+  //noLoop()
 
-function draw() {
+} 
+
+function draw() { 
   randomSeed(seed);
 
   background(100);
-
+  
   noStroke();
 
   fill(skyColor);
-  rect(0, 0, width, height / 2);
+  rect(0, 0, width, 500);
+  
+  fill(grassColor);
+  rect(0, 500, width, height / 2);
 
-  // An example of making something respond to the mouse
+  fill(roadcolor);
+  quad(350, 500, 450, 500, 700, 800, 100, 800);
+  
   fill(...sunColor);
   ellipse(mouseX,0,30,30);
   ellipse(mouseX,0,50,50);
   ellipse(mouseX,0,100,100);
   ellipse(mouseX,0,200,200);
 
-  fill(grassColor);
-  rect(0, height / 2, width, height / 2);
+  translate(100, 650)
+  branch(100)
 
-  // An example of drawing an irregular polygon
-  fill(hillColor);
-  beginShape();
-  vertex(0, height / 2);
-  const steps = 10;
-  for (let i = 0; i < steps + 1; i++) {
-    let x = (width * i) / steps;
-    let y =
-      height / 2 - (random() * random() * random() * height) / 8 - height / 50;
-    vertex(x, y);
-  }
-  vertex(width, height / 2);
-  endShape(CLOSE);
+  translate(600,0)
+  branch(100)
 
-  const trees = 5*random();
-  for (let i = 0; i < trees; i++) {
-    drawLtree();
-  }
+  translate(-500,-100)
+  branch(60)
 
-  // An example of recursively drawing an L-tree 
-  function drawLtree() {
-    let x = width * random();
-    let y = height/2 + height/8 * random();
-    let s = width/200 + (y - height/2)/2;
-    let jitter = (mouseX - width/2) / width * 2 * Math.PI / 180;
-    drawLtreeBranch(x, y, s, (-90 * Math.PI / 180) + jitter, 0, 5); // this angle points north (0 is east)
-  }  
-
-  function drawLtreeBranch(x, y, s, angle, max_limit, branch_weight) { // s is length of a segment
-    stroke(treeColor);
-    strokeWeight(branch_weight);
-    let v = p5.Vector.fromAngle(angle, s);
-    let vx = v.x;
-    let vy = v.y; 
-    let x1 = x;
-    let y1 = y; 
-    let x2 = x1 + vx;
-    let y2 = y1 + vy;
-    line(x1, y1, x2, y2);
-
-    let new_s = s * 0.7;
-    let new_max = max_limit + random();
-    let new_branch_weight = branch_weight - 1;
-    new_branch_weight = max(new_branch_weight, 1);
-
-    if (max_limit < 3) {
-        if (random() < 1/3) {
-            drawLtreeBranch(x2, y2, new_s, (-35 * Math.PI / 180) + angle, new_max, new_branch_weight);
-        } else if (random() > 1/3) {
-            drawLtreeBranch(x2, y2, new_s, (35 * Math.PI / 180) + angle, new_max, new_branch_weight);
-        } else {
-            drawLtreeBranch(x2, y2, new_s, (-35 * Math.PI / 180) + angle, new_max, new_branch_weight);
-            drawLtreeBranch(x2, y2, new_s, (35 * Math.PI / 180) + angle, new_max, new_branch_weight);
-        }
-        drawLtreeBranch(x2, y2, new_s, angle, new_max, new_branch_weight);
-    }
-    else {
-        if (random() < 1/3) {
-            drawLeave(x2, y2, new_s, (-35 * Math.PI / 180) + angle);
-        } else if (random() > 1/3) {
-            drawLeave(x2, y2, new_s, (35 * Math.PI / 180) + angle);
-        } else {
-            drawLeave(x2, y2, new_s, (-35 * Math.PI / 180) + angle);
-            drawLeave(x2, y2, new_s, (35 * Math.PI / 180) + angle);
-        }
-    }
-
-  }
-
-  function drawLeave(x, y, s, angle) {
-    fill(leaveColor);
-    noStroke();
-    let v = p5.Vector.fromAngle(angle, s);
-    let vx = v.x;
-    let vy = v.y; 
-    let x1 = x;
-    let y1 = y; 
-    let x2 = x1 + vx;
-    let y2 = y1 + vy;
-    line(x1, y1, x2, y2);
-    circle(x2, y2, 3);
-
-  }
+  translate(400,0)
+  branch(60)
+  
 }
 
+function branch(len)
+{
+  push()
+  if(len > 19)
+    {
+      strokeWeight(map(len, 4, 130, 1, 16))
+      stroke(70,40,20)
+      line(0,0,0,-len)
+      translate(0,-len)
+      rotate(random(-20,-30))
+      branch(len *random(0.7,0.9))
+      rotate(random(50,60))
+      branch(len *random(0.7,0.9))
+      
+      
+    }
+  else
+    {
+      var r = 220 + random(-20,20)
+      var g = 120 + random(-20,20)
+      var b = 170 + random(-20,20)
+      fill(r,g,b,150)
+      noStroke()
+      
+      ellipse(0,0,10)
+      
+      beginShape()
+      for(var i =45; i <135; i++)
+        {
+          var rad = 15
+          var x = rad * cos(i)
+          var y = rad * sin(i)
+          vertex(x,y)
+        }
+      for(var i =135; i>40; i--)
+        {
+          var rad = 15
+          var x = rad * cos(i)
+          var y = rad * sin(-i)+20
+          vertex(x,y)
+        }
+      endShape(CLOSE)
+    }
+  pop()
+}
