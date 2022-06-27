@@ -2,9 +2,11 @@
 //https://www.youtube.com/watch?v=-3HwUKsovBE
 let seed = 1234;
 
+
 const grassColor = "#498428";
 const skyColor = "#91C5F2";
 let roadcolor = '#292929';
+let roadcolor2 = '#858585';
 const sunColor = [254,254,254,80];
 
 
@@ -31,6 +33,12 @@ function draw() {
 
   fill(roadcolor);
   quad(350, 500, 450, 500, 700, 800, 100, 800);
+
+  fill(roadcolor2);
+  quad(390, 505, 410, 505, 420, 580, 380, 580);
+
+  fill(roadcolor2);
+  quad(380, 610, 420, 610, 440, 780, 360, 780);
   
   fill(...sunColor);
   ellipse(mouseX,0,30,30);
@@ -45,10 +53,16 @@ function draw() {
   branch(100)
 
   translate(-500,-100)
-  branch(60)
+  branch(70)
 
   translate(400,0)
-  branch(60)
+  branch(70)
+
+  translate(-340, -40)
+  branch(50)
+
+  translate(260, 0)
+  branch(50)
   
 }
 
