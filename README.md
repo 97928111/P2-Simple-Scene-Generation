@@ -14,4 +14,4 @@ Artist statement: The effect that I trying to achieve is the tree will also move
 with the mouse, but I really do not know how it work and how the code to implied,
 so I change to focus on putting in more tree in the scene to make it more real.
 
-Credit: Adam Smith; Asiiah Song
+Credit: Jimmy Lu
