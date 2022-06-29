@@ -2,7 +2,6 @@
 //https://www.youtube.com/watch?v=-3HwUKsovBE
 let seed = 1234;
 
-
 const grassColor = "#498428";
 const skyColor = "#91C5F2";
 let roadcolor = '#292929';
